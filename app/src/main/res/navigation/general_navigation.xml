@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/general_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.myinstaclone.presentation.screens._splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.myinstaclone.presentation.screens._sign_in.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.myinstaclone.presentation.screens._home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_commentFragment"
+            app:destination="@id/commentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentFragment"
+        android:name="com.example.myinstaclone.presentation.screens._comment.CommentFragment"
+        android:label="fragment_comment"
+        tools:layout="@layout/fragment_comment" />
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.example.myinstaclone.presentation.screens._search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/postMediaFragment"
+        android:name="com.example.myinstaclone.presentation.screens._post_media.PostMediaFragment"
+        android:label="fragment_post_media"
+        tools:layout="@layout/fragment_post_media" />
+    <fragment
+        android:id="@+id/mediaFragment"
+        android:name="com.example.myinstaclone.presentation.screens._media.MediaFragment"
+        android:label="fragment_media"
+        tools:layout="@layout/fragment_media" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.myinstaclone.presentation.screens._profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment2"
+            app:destination="@id/editProfileFragment2" />
+        <action
+            android:id="@+id/action_profileFragment_to_deleteUserAccountFragment"
+            app:destination="@id/deleteUserAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment2"
+        android:name="com.example.myinstaclone.presentation.screens._edit_profile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/deleteUserAccountFragment"
+        android:name="com.example.myinstaclone.presentation.screens._delete.DeleteUserAccountFragment"
+        android:label="fragment_delete_user_account"
+        tools:layout="@layout/fragment_delete_user_account" />
+</navigation>
