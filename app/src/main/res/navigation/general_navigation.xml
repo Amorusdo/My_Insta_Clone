@@ -37,7 +37,7 @@
         android:label="fragment_comment"
         tools:layout="@layout/fragment_comment" />
     <fragment
-        android:id="@+id/searchFragment2"
+        android:id="@+id/searchFragment"
         android:name="com.example.myinstaclone.presentation.screens._search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
