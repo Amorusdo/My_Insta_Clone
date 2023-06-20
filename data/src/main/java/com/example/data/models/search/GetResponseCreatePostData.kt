@@ -2,6 +2,6 @@ package com.example.data.models.search
 
 import com.example.data.models.user_post.PostData
 
-data class SearchPostsData (
+data class GetResponseCreatePostData (
     val posts: List<PostData>
 )
