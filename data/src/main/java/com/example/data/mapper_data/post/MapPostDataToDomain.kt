@@ -1,16 +1,16 @@
 package com.example.data.mapper_data.post
 
-import com.example.data._network.models.user_image.ImageCloud
-import com.example.data._network.models.user_post.PostCloud
 import com.example.data.models.user_image.ImageData
 import com.example.data.models.user_post.PostData
 import com.example.domain.domain.interfaces.Mapper
+import com.example.domain.domain.models.user_image.ImageDomain
+import com.example.domain.domain.models.user_post.PostDomain
 
-class MapPostDataToCloud(
-    private val mapper: Mapper<ImageData , ImageCloud> ,
-) : Mapper<PostData , PostCloud> {
+class MapPostDataToDomain(
+    private val mapper: Mapper<ImageData , ImageDomain> ,
+) : Mapper<PostData , PostDomain> {
     override fun map(from: PostData) = from.run {
-        PostCloud(
+        PostDomain(
             objectsId = objectsId ,
             postImage = postImage?.let { mapper.map(it) } ,
             description = description ,

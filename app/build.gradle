@@ -1,6 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+
 }
 
 android {
@@ -9,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.myinstaclone"
-        minSdk 26
+        minSdk 27
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -34,6 +38,7 @@ android {
 }
 
 dependencies {
+
     implementation project(path: ':domain')
     implementation project(path: ':data')
 
@@ -51,4 +56,13 @@ dependencies {
 
     //round_image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Hilt
+    def hilt_version = '2.44.2'
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
+
+    implementation "com.parse:parse-android:1.17.3"
+
+
 }

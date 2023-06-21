@@ -1,20 +1,21 @@
 package com.example.myinstaclone
 
 import android.app.Application
+import com.parse.Parse
+import dagger.hilt.android.HiltAndroidApp
 
-
-
- class App : Application() {
+@HiltAndroidApp
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-//        Parse.initialize(
-//            Parse.Configuration.Builder(this@App)
-//                .applicationId(getString(R.string.app_id)) // if defined
-//                .clientKey(getString(R.string.client_key))
-//                .server(getString(R.string.server_url))
-//                .build()
-//        )
+        Parse.initialize(
+            Parse.Configuration.Builder(this@App)
+                .applicationId(getString(R.string.app_id)) // if defined
+                .clientKey(getString(R.string.client_key))
+                .server(getString(R.string.server_url))
+                .build()
+        )
     }
     companion object {
         lateinit var instance: App

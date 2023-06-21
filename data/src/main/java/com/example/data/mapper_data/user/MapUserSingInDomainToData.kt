@@ -1,16 +1,16 @@
 package com.example.data.mapper_data.user
 
-import com.example.data._network.models.user_image.ImageCloud
-import com.example.data._network.models.user_registration.UserSignInCloud
 import com.example.data.models.user_image.ImageData
 import com.example.data.models.user_registration.UserSignInData
 import com.example.domain.domain.interfaces.Mapper
+import com.example.domain.domain.models.user_image.ImageDomain
+import com.example.domain.domain.models.user_registration.UserSignInDomain
 
-class MapUserSingInDataToCloud(
-    private val mapper: Mapper<ImageData , ImageCloud>
-) : Mapper<UserSignInData , UserSignInCloud> {
-    override fun map(from: UserSignInData): UserSignInCloud = from.run {
-        UserSignInCloud(
+class MapUserSingInDomainToData(
+    private val mapper: Mapper<ImageDomain , ImageData>
+) : Mapper<UserSignInDomain , UserSignInData> {
+    override fun map(from: UserSignInDomain) = from.run {
+        UserSignInData(
             id = id ,
             userFullName = userFullName ,
             userEmail = userEmail ,

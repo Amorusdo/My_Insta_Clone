@@ -1,4 +1,4 @@
-package com.example.data._network.mapper_cloud
+package com.example.data._network
 
 object Utils {
     const val BASE_URL ="https://parseapi.back4app.com/"

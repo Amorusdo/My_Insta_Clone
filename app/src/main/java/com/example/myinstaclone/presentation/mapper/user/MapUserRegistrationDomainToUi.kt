@@ -1,16 +1,15 @@
-package com.example.data.mapper_data.user
+package com.example.myinstaclone.presentation.mapper.user
 
-import com.example.data._network.models.user_image.ImageCloud
-import com.example.data._network.models.user_registration.UserRegistrationCloud
-import com.example.data.models.user_image.ImageData
-import com.example.data.models.user_registration.UserRegistrationData
 import com.example.domain.domain.interfaces.Mapper
+import com.example.domain.domain.models.user_image.ImageDomain
+import com.example.domain.domain.models.user_registration.UserRegistrationDomain
+import com.example.myinstaclone.presentation.models.user_image.ImageUi
+import com.example.myinstaclone.presentation.models.user_registration.UserRegistrationUi
 
-class MapUserRegistrationDataToCloud(
-    private val mapper: Mapper<ImageData , ImageCloud>
-) : Mapper<UserRegistrationData , UserRegistrationCloud> {
-    override fun map(from: UserRegistrationData): UserRegistrationCloud = from.run {
-        UserRegistrationCloud(
+class MapUserRegistrationDomainToUi(private val mapper: Mapper<ImageDomain , ImageUi>) :
+    Mapper<UserRegistrationDomain , UserRegistrationUi> {
+    override fun map(from: UserRegistrationDomain) = from.run {
+        UserRegistrationUi(
             objectId = objectId ,
             userFullName = userFullName ,
             userEmail = userEmail ,
