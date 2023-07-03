@@ -8,14 +8,11 @@ import com.example.domain.domain.models.user_registration.HomeScreenItemDomain
 import com.example.domain.domain.models.user_registration.UserRegistrationDomain
 import com.example.domain.domain.repository.cloud.GetRepository
 import com.example.domain.domain.use_case.home.FetchAllHomeScreenItemsUseCase
-import com.example.domain.domain.use_case.home.FetchAllHomeScreenItemsUseCaseImpl
-import com.example.myinstaclone.presentation.screens._home.listener.ItemClickListener
-import com.example.myinstaclone.presentation.screens._home.mapper.ItemFilteredHomeScreenMapper
 import com.example.myinstaclone.presentation.adaptor.lisener.UsersItemClickListener
 import com.example.myinstaclone.presentation.common.event.Event
 import com.example.myinstaclone.presentation.models.user_comment.GetResponseListCommentsUi
-import com.example.myinstaclone.presentation.models.user_registration.HomeScreenItemUi
 import com.example.myinstaclone.presentation.models.user_registration.UserRegistrationUi
+import com.example.myinstaclone.presentation.screens._home.listener.ItemClickListener
 import com.example.myinstaclone.presentation.screens._home.mapper.ItemHomeScreenMapperImpl
 import com.example.myinstaclone.presentation.screens._home.router.HomeScreenRouter
 import com.example.myinstaclone.presentation.utils.NavCommand
@@ -31,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelHome @Inject constructor(
     private val repository: GetRepository ,
-//    private val storageRepository: UserStorageRepository ,
+//    private val storageRepository: UserStorageRepository
     fetchAllHomeScreenItemsUseCase: FetchAllHomeScreenItemsUseCase ,
     private val mapUserDomainToUserUi: Mapper<UserRegistrationDomain , UserRegistrationUi> ,
     private val mapGetCommentResponse: Mapper<GetResponseListCommentsDomain , GetResponseListCommentsUi> ,
@@ -58,7 +55,8 @@ class ViewModelHome @Inject constructor(
 
     private var _navCommand = createMutableSharedFlowAsSingleLiveEvent<NavCommand>()
     val navCommand: SharedFlow<NavCommand> get() = _navCommand.asSharedFlow()
-//
+
+    //
     fun navigation(navDirections: NavDirections) {
         _navigation.value = Event(NavigationCommand.ToDirection(navDirections))
     }
@@ -68,9 +66,9 @@ class ViewModelHome @Inject constructor(
     fun <T : Any> createMutableSharedFlowAsSingleLiveEvent(): MutableSharedFlow<T> =
         MutableSharedFlow(0 , 1 , BufferOverflow.DROP_OLDEST)
 
-//    init {
+    init {
 //        checkSave()
-//    }
+    }
 
     val allFilteredItemsFlow =
         fetchAllHomeScreenItemsUseCase()
@@ -95,7 +93,7 @@ class ViewModelHome @Inject constructor(
 //    private fun checkSave() {
 //        viewModelScope.launch {
 //            kotlin.runCatching {
-//                storageRepository.getUser()
+////                storageRepository.getUser()
 //            }.onSuccess {
 //                if (it.userFullName != "Default") {
 //                    _user.value = mapUserDomainToUserUi.map(it)

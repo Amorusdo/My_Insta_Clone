@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.data.repositoryImpl.storage.UserStorageRepositoryImpl
 import com.example.myinstaclone.App
 import com.example.myinstaclone.R
 import com.example.myinstaclone.databinding.FragmentProfileBinding
@@ -22,6 +24,7 @@ import com.example.myinstaclone.presentation.screens._home.ViewModelHome
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(),
@@ -61,7 +64,7 @@ class ProfileFragment : Fragment(),
 
     private fun clikers() = with(binding) {
         chooseMenu.setOnClickListener {
-//            openDialog()
+           openDialog()
         }
         editProfileBtn.setOnClickListener {
             observeUser()
@@ -71,13 +74,19 @@ class ProfileFragment : Fragment(),
             goToAddFriends()
         }
     }
-
+//
+//    private fun userMeObserve() {
+//        lifecycleScope.launchWhenResumed {
+//            viewModelGet.userMe(sessiontoken)
+//        }
+//    }
     private fun userMeObserve() {
-        lifecycleScope.launchWhenResumed {
-            viewModelGet.userMe(sessiontoken)
+        lifecycleScope.launch {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                viewModelGet.userMe(sessiontoken)
+            }
         }
     }
-
     private fun observeUser() {
         lifecycleScope.launchWhenCreated {
             viewModelLogin.user.observe(viewLifecycleOwner) {
@@ -150,46 +159,46 @@ class ProfileFragment : Fragment(),
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDeleteUserAccountFragment(id))
     }
 
-//    private fun openDialog() {
-//        val dialogBinding = ItemSpinerBinding.inflate(layoutInflater)
-//        dialogBinding.apply {
-//            val dialog =
-//                AlertDialog.Builder(requireContext()).setTitle("")
-//                    .setView(root)
-//                    .create()
-//            dialog.setOnShowListener {
-//                dialogBinding.singOut.setOnClickListener {
-//                    dialog.dismiss()
-//                    val sharedPref = App.instance.getSharedPreferences(
-//                        StorageDataSourceImpl.SHARED_PREFER_NAME ,
-//                        Context.MODE_PRIVATE
-//                    )
-//                    sharedPref.edit().remove(StorageDataSourceImpl.SAVED_USER_NAME).apply()
-//                    goToLogin()
-//                }
-//                dialogBinding.deleteAccount.setOnClickListener {
-//                    dialog.dismiss()
-//                    deleteAccount()
-//                    deleteAccountUser()
-//                    val sharedPref = App.instance.getSharedPreferences(
-//                        StorageDataSourceImpl.SHARED_PREFER_NAME ,
-//                        Context.MODE_PRIVATE
-//                    )
-//                    sharedPref.edit().remove(StorageDataSourceImpl.SAVED_USER_NAME).apply()
-//                    goToLogin()
-//                }
-//                dialog.show()
-//
-//                dialogBinding.back.setOnClickListener {
-//                    dialog.dismiss()
-//                }
-//            }
-//            dialog.show()
-//            val window = dialog.window
-//            window?.setLayout(600 , 450) // размеры диалогового окна
-//            window?.setGravity(Gravity.TOP or Gravity.END) // позиция диалогового ок
-//        }
-//    }
+    private fun openDialog() {
+        val dialogBinding = ItemSpinerBinding.inflate(layoutInflater)
+        dialogBinding.apply {
+            val dialog =
+                AlertDialog.Builder(requireContext()).setTitle("")
+                    .setView(root)
+                    .create()
+            dialog.setOnShowListener {
+                dialogBinding.singOut.setOnClickListener {
+                    dialog.dismiss()
+                    val sharedPref = App.instance.getSharedPreferences(
+                        UserStorageRepositoryImpl.SHARED_PREFER_NAME ,
+                        Context.MODE_PRIVATE
+                    )
+                    sharedPref.edit().remove(UserStorageRepositoryImpl.SAVED_USER_NAME).apply()
+                    goToLogin()
+                }
+                dialogBinding.deleteAccount.setOnClickListener {
+                    dialog.dismiss()
+                    deleteAccount()
+                    deleteAccountUser()
+                    val sharedPref = App.instance.getSharedPreferences(
+                        UserStorageRepositoryImpl.SHARED_PREFER_NAME ,
+                        Context.MODE_PRIVATE
+                    )
+                    sharedPref.edit().remove(UserStorageRepositoryImpl.SAVED_USER_NAME).apply()
+                    goToLogin()
+                }
+                dialog.show()
+
+                dialogBinding.back.setOnClickListener {
+                    dialog.dismiss()
+                }
+            }
+            dialog.show()
+            val window = dialog.window
+            window?.setLayout(600 , 450) // размеры диалогового окна
+            window?.setGravity(Gravity.TOP or Gravity.END) // позиция диалогового ок
+        }
+    }
 
     override fun onItemClick(position: Int , id: String ) {
         deletePost(id)

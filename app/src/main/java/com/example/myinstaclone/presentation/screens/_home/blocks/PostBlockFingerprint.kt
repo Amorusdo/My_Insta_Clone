@@ -91,8 +91,5 @@ class MainScreenCollectionsBlockViewHolder(
     private fun RecyclerView.restoreState(parcelable: Parcelable?) {
         if (parcelable == null) return
         layoutManager?.onRestoreInstanceState(parcelable)
-
     }
-
-
 }

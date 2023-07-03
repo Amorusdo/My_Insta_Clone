@@ -1,4 +1,4 @@
-package com.example.myinstaclone.presentation.screens._search.profile
+package com.example.myinstaclone.presentation.screens._profile.profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

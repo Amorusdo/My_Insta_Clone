@@ -48,6 +48,5 @@ class ViewModelSearch @Inject constructor(
     }
 
     override fun onClick() {
-
     }
 }
