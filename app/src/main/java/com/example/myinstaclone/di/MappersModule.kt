@@ -15,6 +15,8 @@ import com.example.data._network.models.user_registration.UserRegistrationCloud
 import com.example.data._network.models.user_registration.UserSignInCloud
 import com.example.data.mapper_data.comment.*
 import com.example.data.mapper_data.post.MapListDomainPostToListData
+import com.example.data.mapper_data.post.MapPostDataToDomain
+import com.example.data.mapper_data.post.MapPostDomainToData
 import com.example.data.mapper_data.user.*
 import com.example.data.models.search.GetResponseCreatePostData
 import com.example.data.models.user_comment.GetResponseListCommentsData
@@ -22,6 +24,15 @@ import com.example.data.models.user_comment.UserCommentsData
 import com.example.data.models.user_image.ImageData
 import com.example.data.models.user_post.PostData
 import com.example.data.models.user_registration.*
+import com.example.data.storage.mapper.from_storage.MapImageStorageToData
+import com.example.data.storage.mapper.from_storage.MapListStorageToListData
+import com.example.data.storage.mapper.from_storage.MapUserStorageToData
+import com.example.data.storage.mapper.to_storage.MapImageDataToStorage
+import com.example.data.storage.mapper.to_storage.MapListDataToListStorage
+import com.example.data.storage.mapper.to_storage.MapUserRegistrationDataToStorage
+import com.example.data.storage.model.ImageUserStorage
+import com.example.data.storage.model.PostStorage
+import com.example.data.storage.model.UserRegistrationStorage
 import com.example.domain.domain.interfaces.Mapper
 import com.example.domain.domain.models.user_comment.GetResponseListCommentsDomain
 import com.example.domain.domain.models.user_comment.UserCommentsDomain
@@ -155,15 +166,8 @@ class MappersModule {
     @Singleton
     fun provideMapPostDataToCloud(
         mapper: Mapper<ImageData , ImageCloud> ,
-        mapComment: Mapper<List<UserCommentsData> , List<UserCommentsCloud>>
     ): Mapper<PostData , PostCloud> = MapPostDataToCloud(mapper = mapper)
 
-
-//    @Provides
-//    @Singleton
-//    fun provideMapPostResponseCloudToPostResponseData(
-//    ): Mapper<GetResponseCreatePostCloud , GetResponseCreatePostData> =
-//        MapGetResponseCreatePostCloudToData()
 
     @Provides
     @Singleton
@@ -172,6 +176,12 @@ class MappersModule {
     ): Mapper<List<PostData> , List<PostCloud>> = MapListDataPostToListCloud(mapper = mapper)
 
     ////////////////////////////// DATA MAP PROVIDES ////////////////////////////////////
+    @Provides
+    @Singleton
+    fun provideMapPostDataToDomain(
+        mapper: Mapper<ImageData , ImageDomain> ,
+    ) : Mapper<PostData , PostDomain> = MapPostDataToDomain(mapper=mapper)
+
 
     @Provides
     @Singleton
@@ -272,6 +282,13 @@ class MappersModule {
     @Singleton
     fun provideMapUserResponseDataToDomain(): Mapper<ResponseData , ResponseDomain> =
         MapUserDataResponseToDomain()
+
+    @Provides
+    @Singleton
+    fun provideMapPostDomainToData(
+   mapper: Mapper<ImageDomain , ImageData> ,
+    ) : Mapper<PostDomain , PostData> =
+        MapPostDomainToData(mapper=mapper)
 
 //    @Provides
 //    @Singleton
@@ -408,41 +425,41 @@ class MappersModule {
 
     ////////////////////////////// STORAGE MAP PROVIDES ////////////////////////////////////
 
-//    @Provides
-//    @Singleton
-//    fun provideMapListStorageToListData(
-//        mapper: Mapper<PostData , PostStorage>
-//    ): Mapper<List<PostData> , List<PostStorage>> = MapListStorageToListData(mapper = mapper)
-//
-//    @Provides
-//    @Singleton
-//    fun provideMapListDataToListStorage(
-//        mapper: Mapper<PostStorage , PostData>
-//    ): Mapper<List<PostStorage> , List<PostData>> = MapListDataToListStorage(mapper = mapper)
-//
-//    @Provides
-//    @Singleton
-//    fun provideMapImageStorageToData(): Mapper<ImageUserStorage , ImageData> =
-//        MapImageStorageToData()
-//
-//    @Provides
-//    @Singleton
-//    fun provideMapUserStorageToData(
-//        mapper: Mapper<ImageUserStorage , ImageData>
-//    ): Mapper<UserRegistrationStorage , UserRegistrationData> =
-//        MapUserStorageToData(mapper = mapper)
-//
-//    @Provides
-//    @Singleton
-//    fun provideMapImageDataToStorage(): Mapper<ImageData , ImageUserStorage> =
-//        MapImageDataToStorage()
-//
-//    @Provides
-//    @Singleton
-//    fun provideMapUserRegistrationDataToStorage(
-//        mapper: Mapper<ImageData , ImageUserStorage>
-//    ): Mapper<UserRegistrationData , UserRegistrationStorage> =
-//        MapUserRegistrationDataToStorage(mapper = mapper)
+    @Provides
+    @Singleton
+    fun provideMapListStorageToListData(
+        mapper: Mapper<PostData , PostStorage>
+    ): Mapper<List<PostData> , List<PostStorage>> = MapListStorageToListData(mapper = mapper)
+
+    @Provides
+    @Singleton
+    fun provideMapListDataToListStorage(
+        mapper: Mapper<PostStorage , PostData>
+    ): Mapper<List<PostStorage> , List<PostData>> = MapListDataToListStorage(mapper = mapper)
+
+    @Provides
+    @Singleton
+    fun provideMapImageStorageToData(): Mapper<ImageUserStorage , ImageData> =
+        MapImageStorageToData()
+
+    @Provides
+    @Singleton
+    fun provideMapUserStorageToData(
+        mapper: Mapper<ImageUserStorage , ImageData>
+    ): Mapper<UserRegistrationStorage , UserRegistrationData> =
+        MapUserStorageToData(mapper = mapper)
+
+    @Provides
+    @Singleton
+    fun provideMapImageDataToStorage(): Mapper<ImageData , ImageUserStorage> =
+        MapImageDataToStorage()
+
+    @Provides
+    @Singleton
+    fun provideMapUserRegistrationDataToStorage(
+        mapper: Mapper<ImageData , ImageUserStorage>
+    ): Mapper<UserRegistrationData , UserRegistrationStorage> =
+        MapUserRegistrationDataToStorage(mapper = mapper)
 
 
 //    @Provides

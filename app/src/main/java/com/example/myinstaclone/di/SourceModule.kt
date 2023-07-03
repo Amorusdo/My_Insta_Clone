@@ -60,24 +60,20 @@ class SourceModule {
     fun providesPostCloudDatSours(
         api: PostApi ,
         mapUserDataToCloud: Mapper<UserRegistrationData , UserRegistrationCloud> ,
-        mapUserResponseToData: Mapper<ResponseCloud , ResponseData> ,
-        mapUserSignInResponseToData: Mapper<ResponseCloud , ResponseData> ,
         mapUserSingUpCloudToData: Mapper<UserSignInData , UserSignInCloud> ,
-        mapCreatePostResponseCloudToData: Mapper<ResponseCloud , ResponseData> ,
         mapPostDataToCloud: Mapper<PostData , PostCloud> ,
         mapComment: Mapper<UserCommentsData , UserCommentsCloud> ,
         mapPostCommentResponse: Mapper<ResponseCloud , ResponseData> ,
     ): PostCloudDataSours = PostCloudDataSoursImpl(
         api = api ,
         mapPostDataToCloud = mapPostDataToCloud ,
-//        mapCreatePostResponseCloudToData = mapCreatePostResponseCloudToData ,
         mapUserDataToCloud = mapUserDataToCloud ,
-//        mapUserResponseToData = mapUserResponseToData ,
+
         mapUserSingUpCloudToData = mapUserSingUpCloudToData ,
         mapComment = mapComment ,
         mapPostCommentResponse = mapPostCommentResponse ,
-//        mapUserSignInResponseToData = mapUserSignInResponseToData
-    )
+
+        )
 
 
     @Provides

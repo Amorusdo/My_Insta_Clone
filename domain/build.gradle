@@ -9,6 +9,11 @@ java {
 }
 
 dependencies {
+
+    // Retrofit
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+
 //  coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
 

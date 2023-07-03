@@ -35,7 +35,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures { viewBinding=true}
+    buildFeatures {
+        viewBinding=true
+    }
 }
 
 dependencies {
@@ -51,6 +53,11 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.statistics.library:library:1.0.0'
+
     //fragment_navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.6.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.6.0"
@@ -63,7 +70,37 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 
+    //parse
     implementation "com.parse:parse-android:1.17.3"
 
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
+
+    //  coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
+    //  view_lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-alpha03"
+
+
+    //Круглая картинка
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Shimmer Effect
+    implementation "com.facebook.shimmer:shimmer:0.5.0"
+
+    //Networking
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //okhttp
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
 
 }

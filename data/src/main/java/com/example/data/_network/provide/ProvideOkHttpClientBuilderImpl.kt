@@ -3,7 +3,7 @@ package com.example.data._network.provide
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
-class ProvideOkHttpClientBuilderImpl(
+class  ProvideOkHttpClientBuilderImpl(
     private val provideInterceptor: ProvideInterceptor ,
     private val timeOutSeconds: Long = 60L ,
 ) : ProvideOkHttpClientBuilder {

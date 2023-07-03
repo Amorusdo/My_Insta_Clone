@@ -21,10 +21,17 @@
         android:id="@+id/signInFragment"
         android:name="com.example.myinstaclone.presentation.screens._sign_in.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.myinstaclone.presentation.screens._home.HomeFragment"
+        android:name="com.example.myinstaclone.presentation.screens._home.ScreenHome"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -33,9 +40,13 @@
     </fragment>
     <fragment
         android:id="@+id/commentFragment"
-        android:name="com.example.myinstaclone.presentation.screens._comment.CommentFragment"
+        android:name="com.example.myinstaclone.presentation.screens._comment.ScreenCommentsFragment"
         android:label="fragment_comment"
-        tools:layout="@layout/fragment_comment" />
+        tools:layout="@layout/fragment_comment" >
+        <argument
+            android:name="imageId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.myinstaclone.presentation.screens._search.SearchFragment"
@@ -58,19 +69,50 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment2"
-            app:destination="@id/editProfileFragment2" />
+            app:destination="@id/editProfileFragment" />
         <action
             android:id="@+id/action_profileFragment_to_deleteUserAccountFragment"
             app:destination="@id/deleteUserAccountFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_allUserFragment"
+            app:destination="@id/allUserFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
-        android:id="@+id/editProfileFragment2"
+        android:id="@+id/editProfileFragment"
         android:name="com.example.myinstaclone.presentation.screens._edit_profile.EditProfileFragment"
         android:label="fragment_edit_profile"
-        tools:layout="@layout/fragment_edit_profile" />
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/deleteUserAccountFragment"
         android:name="com.example.myinstaclone.presentation.screens._delete.DeleteUserAccountFragment"
         android:label="fragment_delete_user_account"
-        tools:layout="@layout/fragment_delete_user_account" />
+        tools:layout="@layout/fragment_delete_user_account" >
+        <argument
+            android:name="deletePostId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/allUserFragment"
+        android:name="com.example.myinstaclone.presentation.screens._alluser.AllUserFragment"
+        android:label="fragment_all_user"
+        tools:layout="@layout/fragment_all_user" />
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.myinstaclone.presentation.screens._registration_user.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_registrationFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

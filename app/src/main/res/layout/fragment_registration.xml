@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.screens._registration_user.RegistrationFragment">
+
+    <ImageView
+        android:id="@+id/image3"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="88dp"
+        android:src="@drawable/img_profile_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/img" />
+
+    <TextView
+        android:id="@+id/text_enter_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/enter_email"
+        app:layout_constraintStart_toStartOf="@+id/inter_email"
+        app:layout_constraintTop_toBottomOf="@+id/image3" />
+
+    <EditText
+        android:id="@+id/inter_email"
+        style="@style/sign_edit_text"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="32dp"
+        android:autofillHints=""
+        android:background="@drawable/login_input_bg"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_enter_email"
+        tools:ignore="DuplicateClickableBoundsCheck" />
+
+    <Button
+        android:id="@+id/next"
+        style="@style/button"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="20dp"
+        android:padding="15dp"
+        android:text="@string/next"
+        android:textSize="16sp"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inter_email"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/text_create_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/create_your_login"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/inter_full_name"
+        app:layout_constraintStart_toStartOf="@+id/text_create_password" />
+
+    <EditText
+        android:id="@+id/inter_full_name"
+        style="@style/sign_edit_text"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/login_input_bg"
+        android:hint="@string/log_in"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/text_create_password"
+        app:layout_constraintEnd_toEndOf="@+id/p_signUp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/p_signUp"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="DuplicateClickableBoundsCheck"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/text_create_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/create_password"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/p_signUp"
+        app:layout_constraintStart_toStartOf="@+id/p_signUp" />
+
+    <EditText
+        android:id="@+id/p_signUp"
+        style="@style/sign_edit_text"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/login_input_bg"
+        android:hint="@string/password"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/registration_btn"
+        app:layout_constraintEnd_toEndOf="@+id/registration_btn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/registration_btn"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/registration_btn"
+        style="@style/button"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="80dp"
+        android:elevation="20dp"
+        android:padding="15dp"
+        android:text="@string/registration"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="517dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

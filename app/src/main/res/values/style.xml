@@ -23,5 +23,69 @@
     </style>
 
 
+    <style name="toolbar_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/back_ground</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="toolbar_check" parent="toolbar_dimension_height">
+        <item name="android:background">@drawable/check_batton</item>
+        <item name="android:layout_width">55dp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="profile">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="edit_label_text" parent="profile">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
+    <style name="sign_edit_text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:ems">10</item>
+        <item name="android:textColorHint">@color/grey</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+
+    <style name="numbers_profile" parent="profile">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="edit_edit_text">
+        <item name="android:textColorHint">@color/black</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ems">10</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="button">
+        <item name="rippleColor">@color/white</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:backgroundTint">#107EDF</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+
+    <style name="text_profile" parent="profile">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
 
 </resources>
