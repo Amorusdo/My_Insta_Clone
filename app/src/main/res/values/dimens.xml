@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="_13sp">13</dimen>
+    <dimen name="_13sp">13sp</dimen>
 </resources>

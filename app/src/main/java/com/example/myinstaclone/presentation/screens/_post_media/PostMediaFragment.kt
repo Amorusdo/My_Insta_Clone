@@ -13,7 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.myinstaclone.databinding.FragmentPostMediaBinding
 import com.example.myinstaclone.presentation.all.viewModel.PostViewModel
@@ -27,6 +29,7 @@ import com.parse.SaveCallback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
 @AndroidEntryPoint
@@ -46,7 +49,7 @@ class PostMediaFragment : Fragment(){
     private var imagePostAvatar: ImageUi? = null
     private lateinit var userName: String
     private var userLogin: String? = null
-    private lateinit var sessionToken: String
+    private  var sessionToken: String? = null
     private lateinit var userFullName: String
 
 
@@ -88,32 +91,38 @@ class PostMediaFragment : Fragment(){
     }
 
     private fun userMeObserve() {
-        lifecycleScope.launchWhenResumed {
-            viewModelGet.userMe(sessionToken)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                sessionToken?.let { viewModelGet.userMe(it) }
+            }
         }
-        viewModelGet.userMee.observe(viewLifecycleOwner) {
-            sessionToken = it.sessionToken
-            userFullName = it.userFullName
-            userName = it.userEmail
-            imagePostAvatar = it.userAvatar
+        viewModelGet.userMee.observe(viewLifecycleOwner) { user ->
+            sessionToken = user.sessionToken
+            userFullName = user.userFullName
+            userName = user.userEmail
+            imagePostAvatar = user.userAvatar
         }
     }
 
+
     private fun observeUsers() {
-        lifecycleScope.launchWhenStarted {
-            viewModelGet.user.observe(viewLifecycleOwner) {
-                userId = it.objectId
-                sessionToken = it.sessionToken
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModelGet.user.observe(viewLifecycleOwner) { user ->
+                    userId = user.objectId
+                    sessionToken = user.sessionToken
+                }
             }
         }
         userMeObserve()
     }
 
+
     private fun createPost(): PostUi = PostUi(
         objectsId = "" ,
         postImage = imagePostUi ,
         binding.discriptionText.text.toString() ,
-        postId = userId ,
+        postId = "jk" ,
         avatarName = imagePostAvatar ,
         userImagePost = userLogin ,
         postHolderName = userFullName ,
@@ -121,13 +130,14 @@ class PostMediaFragment : Fragment(){
     )
 
     private fun observe() {
-        lifecycleScope.launchWhenCreated {
-            viewModelPost.createPost(createPost()).collectLatest {
-                findNavController().popBackStack()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModelPost.createPost(createPost()).collectLatest {
+                    findNavController().popBackStack()
+                }
             }
         }
     }
-
     private fun pickFromGallery() {
         pickImageIntent = Intent(
             Intent.ACTION_PICK ,

@@ -3,6 +3,7 @@ package com.example.myinstaclone.presentation.extantions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -113,7 +114,7 @@ fun SearchView.setupTextSize() {
             null
         )
     ) as AutoCompleteTextView
-//    searchText.setTextColor(Color.WHITE)
+   searchText.setTextColor(Color.WHITE)
     searchText.setTextSize(
         TypedValue.COMPLEX_UNIT_PX,
         resources.getDimensionPixelSize(R.dimen._13sp).toFloat()

@@ -12,10 +12,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.myinstaclone.R
 import com.example.myinstaclone.databinding.FragmentEditProfileBinding
@@ -32,9 +35,11 @@ import com.google.android.material.card.MaterialCardView
 import com.parse.ParseFile
 import com.parse.SaveCallback
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
-
+@AndroidEntryPoint
 class EditProfileFragment : Fragment(), TextWatcher {
 
     private val viewModelPut by viewModels<PutViewModel>()
@@ -112,28 +117,34 @@ class EditProfileFragment : Fragment(), TextWatcher {
     }
 
     private fun observeUser() {
-        lifecycleScope.launchWhenStarted {
-            viewModelGet.user.observe(viewLifecycleOwner) {
-                sessionToken = it.sessionToken
-                idUser = it.userSingInId
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModelGet.user.observe(viewLifecycleOwner) {
+                    sessionToken = it.sessionToken
+                    idUser = it.userSingInId
+                }
+            }
+        }
+    }
+    private fun userMeObserve() = with(binding) {
+        lifecycleScope.launch {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                viewModelGet.userMe(sessionToken)
             }
         }
     }
 
-    private fun userMeObserve() = with(binding) {
-        lifecycleScope.launchWhenResumed {
-            viewModelGet.userMe(sessionToken)
-        }
-        viewModelGet.userMee.observe(viewLifecycleOwner) {
-            sessionToken = it.sessionToken
-            idUpData = it.objectId
-            idForUpDataSignIn = it.userSingInId
-            userEmail = it.userEmail
-            fillNames = it.userFullName
-            fillName.hint = it.userFullName
-            userMail.hint = it.userEmail
-            imageEditUi = it.userAvatar
-            Picasso.get().load(it.userAvatar.imageUrl).into(avatar)
+    private fun userMeeObserve() = with(binding) {
+        viewModelGet.userMee.observe(viewLifecycleOwner) { user ->
+            sessionToken = user.sessionToken
+            idUpData = user.objectId
+            idForUpDataSignIn = user.userSingInId
+            userEmail = user.userEmail
+            fillNames = user.userFullName
+            fillName.hint = user.userFullName
+            userMail.hint = user.userEmail
+            imageEditUi = user.userAvatar
+            Picasso.get().load(user.userAvatar.imageUrl).into(avatar)
         }
     }
 
@@ -142,8 +153,7 @@ class EditProfileFragment : Fragment(), TextWatcher {
             id = idUpData ,
             userUi = UserRegistrationUi(
                 objectId = idUpData ,
-                userFullName = (if (fillName.text.toString()
-                        .isEmpty()
+                userFullName = (if (fillName.text.toString().isEmpty()
                 ) fillNames else fillName.text.toString()
                         ).toString() ,
                 userEmail = userEmail ,
@@ -188,14 +198,28 @@ class EditProfileFragment : Fragment(), TextWatcher {
     }
 
     private fun pickFromGallery() {
-        pickImageIntent = Intent(
-            Intent.ACTION_PICK ,
-            MediaStore.Images.Media.INTERNAL_CONTENT_URI
-        )
+    pickImageIntent = Intent( Intent.ACTION_PICK , MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         pickImageIntent?.type = "image/*"
         pickImageIntent?.putExtra(Intent.EXTRA_MIME_TYPES , RegistrationFragment.MIME_TYPES)
         startActivityForResult(pickImageIntent!! , RegistrationFragment.IMAGE_PICK_CODE)
     }
+
+
+//    private fun pickFromGallery() {
+//    pickImageIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+//    pickImageIntent?.type = "image/*"
+//    pickImageIntent?.putExtra(Intent.EXTRA_MIME_TYPES, RegistrationFragment.MIME_TYPES)
+//
+//    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+//    { result ->
+//        if (result.resultCode == Activity.RESULT_OK) {
+//            val selectedImageUri: Uri? = result.data?.data
+//            // Действия после выбора изображения из галереи
+//        }
+//    }
+//
+//    launcher.launch(pickImageIntent)
+//}
 
     private fun openDialogSheet() {
         val bottomSheet = BottomSheetDialog(requireContext())

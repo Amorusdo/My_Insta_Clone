@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.data.repositoryImpl.storage.UserStorageRepositoryImpl
 import com.example.myinstaclone.App
-import com.example.myinstaclone.R
 import com.example.myinstaclone.databinding.FragmentProfileBinding
 import com.example.myinstaclone.databinding.ItemSpinerBinding
 import com.example.myinstaclone.presentation.all.adapter.postsImages.PostImagesAdaptor
@@ -27,11 +27,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment(),
-    PostImagesAdaptor.OnItemClickListenerImageProfile, PostImagesAdaptor.CountPost {
+class ProfileFragment : Fragment() ,
+    PostImagesAdaptor.OnItemClickListenerImageProfile , PostImagesAdaptor.CountPost {
 
     private val binding by lazy { FragmentProfileBinding.inflate(layoutInflater) }
-    private val adapterPost by lazy { PostImagesAdaptor(this,this) }
+    private val adapterPost by lazy { PostImagesAdaptor(this , this) }
     private val viewModelLogin by viewModels<ViewModelHome>()
     private val viewModelPut by viewModels<PutViewModel>()
     private val viewModelGet by viewModels<ViewModelHome>()
@@ -39,7 +39,7 @@ class ProfileFragment : Fragment(),
 
     private lateinit var userId: String
     private lateinit var email: String
-    private lateinit var sessiontoken: String
+    private lateinit var sessionToken: String
     private lateinit var users: String
 
 
@@ -64,7 +64,7 @@ class ProfileFragment : Fragment(),
 
     private fun clikers() = with(binding) {
         chooseMenu.setOnClickListener {
-           openDialog()
+            openDialog()
         }
         editProfileBtn.setOnClickListener {
             observeUser()
@@ -74,44 +74,54 @@ class ProfileFragment : Fragment(),
             goToAddFriends()
         }
     }
-//
-//    private fun userMeObserve() {
-//        lifecycleScope.launchWhenResumed {
-//            viewModelGet.userMe(sessiontoken)
-//        }
-//    }
+
     private fun userMeObserve() {
         lifecycleScope.launch {
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                viewModelGet.userMe(sessiontoken)
+                viewModelGet.userMe(sessionToken)
             }
         }
     }
+
+    //    private fun observeUser() {
+//        lifecycleScope.launchWhenCreated {
+//            viewModelLogin.user.observe(viewLifecycleOwner) {
+//                userId = it.objectId
+//                sessiontoken = it.sessionToken
+//                email = it.userEmail
+//            }
+//        }
+//    }
     private fun observeUser() {
-        lifecycleScope.launchWhenCreated {
-            viewModelLogin.user.observe(viewLifecycleOwner) {
-                userId = it.objectId
-                sessiontoken = it.sessionToken
-                email = it.userEmail
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModelLogin.user.observe(viewLifecycleOwner) { user ->
+                    userId = user.objectId
+                    sessionToken = user.sessionToken
+                    email = user.userEmail
+                }
             }
         }
     }
 
-    private fun userMe()= with(binding){
-        lifecycleScope.launchWhenCreated {
-            viewModelGet.userMee.observe(viewLifecycleOwner) {
-                toolbarProfileText.text = it.userEmail
-                profileName.text = it.userFullName
-                Picasso.get().load(it.userAvatar.imageUrl).into(imageProfile)
-                profileBio.text = it.profileBio
-                userId = it.objectId
-                users = it.userSingInId
+    private fun userMe() = with(binding) {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModelGet.userMee.observe(viewLifecycleOwner) {
+                    toolbarProfileText.text = it.userEmail
+                    profileName.text = it.userFullName
+                    Picasso.get().load(it.userAvatar.imageUrl).into(imageProfile)
+                    profileBio.text = it.profileBio
+                    userId = it.objectId
+                    users = it.userSingInId
 
+                }
             }
         }
+
     }
 
-//    private fun listImages()= with(binding) {
+    //    private fun listImages()= with(binding) {
 //        lifecycleScope.launchWhenResumed {
 //            viewModelGet.oneUserPosts(postId = userId).collectLatest {
 //                adapterPost.postsImages = it.posts.reversed()
@@ -120,28 +130,36 @@ class ProfileFragment : Fragment(),
 //            }
 //        }
 //    }
-
     private fun deleteAccount() {
-        lifecycleScope.launchWhenStarted {
-            viewModelDelete.delete(id = users).collectLatest {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModelDelete.delete(id = users).collectLatest {
+                    // Действия после удаления аккаунта
+                }
             }
         }
     }
 
     private fun deleteAccountUser() {
-        lifecycleScope.launchWhenStarted {
-            viewModelDelete.deleteUser(id = userId , sessionToken = sessiontoken).collectLatest {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModelDelete.deleteUser(id = userId , sessionToken = sessionToken)
+                    .collectLatest {
+                    }
             }
         }
     }
 
     private fun obUpData() {
-        lifecycleScope.launchWhenCreated {
-            viewModelPut.userUpData.observe(viewLifecycleOwner) {
-                observeUser()
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModelPut.userUpData.observe(viewLifecycleOwner) {
+                    observeUser()
+                }
             }
         }
     }
+
 
     private fun editProfile() {
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment2())
@@ -155,8 +173,12 @@ class ProfileFragment : Fragment(),
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAllUserFragment())
     }
 
-    private fun deletePost(id:String) {
-        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDeleteUserAccountFragment(id))
+    private fun deletePost(id: String) {
+        findNavController().navigate(
+            ProfileFragmentDirections.actionProfileFragmentToDeleteUserAccountFragment(
+                id
+            )
+        )
     }
 
     private fun openDialog() {
@@ -200,7 +222,7 @@ class ProfileFragment : Fragment(),
         }
     }
 
-    override fun onItemClick(position: Int , id: String ) {
+    override fun onItemClick(position: Int , id: String) {
         deletePost(id)
     }
 
